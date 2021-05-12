@@ -151,13 +151,11 @@ namespace Lab5.Controllers
             {
                 string path = Path.Combine(storagePath, fileName);
                 FileInfo fileInfo = FileSystem.GetFileInfo(path);
-                //FileInfo fileInfo = new FileInfo(path);
                 if (fileInfo.Exists)
                 {
                     Response.Headers.Add("Name", fileName);
                     Response.Headers.Add("Path", path);
                     Response.Headers.Add("Extension", fileInfo.Extension);
-                    Response.Headers.Add("Full name", fileInfo.FullName);
                     Response.Headers.Add("Size", fileInfo.Length.ToString());
                     Response.Headers.Add("Last access time", fileInfo.LastWriteTime.ToString());
                     Response.Headers.Add("Creation time", fileInfo.CreationTime.ToString());
