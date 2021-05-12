@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -156,9 +157,10 @@ namespace Lab5.Controllers
                     Response.Headers.Add("Name", fileName);
                     Response.Headers.Add("Path", path);
                     Response.Headers.Add("Extension", fileInfo.Extension);
+                    Response.Headers.Add("Full_name", fileInfo.FullName.ToString(CultureInfo.InvariantCulture));
                     Response.Headers.Add("Size", fileInfo.Length.ToString());
-                    Response.Headers.Add("Last access time", fileInfo.LastWriteTime.ToString());
-                    Response.Headers.Add("Creation time", fileInfo.CreationTime.ToString());
+                    Response.Headers.Add("Last_access_time", fileInfo.LastWriteTime.ToString(CultureInfo.InvariantCulture));
+                    Response.Headers.Add("Creation_time", fileInfo.CreationTime.ToString(CultureInfo.InvariantCulture));
                     return StatusCode(200);
                 }
                 else
