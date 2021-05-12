@@ -129,7 +129,7 @@ namespace Lab5.Controllers
                     List<Item> content = new List<Item>();
                     foreach (var element in directories)
                     {
-                        content.Add(new Item("Folder", Path.GetFileName(element)));
+                        content.Add(new Item("Directory", Path.GetFileName(element)));
                     }
                     foreach (var element in files)
                     {
