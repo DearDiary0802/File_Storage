@@ -33,7 +33,6 @@ namespace Lab5.Controllers
             {
                 string fullPath = Path.Combine(storagePath, path);
                 bool needToCopy = Request.Headers.ContainsKey("X-Copy-From");
-                int count = 0;
                 if (!needToCopy)
                 {
                     IFormFileCollection files = Request.Form.Files;
@@ -47,14 +46,13 @@ namespace Lab5.Controllers
                                 {
                                     file.CopyTo(fileStream);
                                 }
-                                count++;
                             }
-                            catch { }
+                            catch 
+                            {
+                                return StatusCode(500);
+                            }
                         }
-                        if (count != 0)
-                            return StatusCode(200);
-                        else
-                            return StatusCode(500);
+                        return StatusCode(200);
                     }
                     else
                     {
@@ -92,7 +90,7 @@ namespace Lab5.Controllers
                     }
                     else
                     {
-                        return StatusCode(404);
+                        return StatusCode(400);
                     }
                 }
             }
@@ -140,7 +138,7 @@ namespace Lab5.Controllers
                 }
                 catch
                 {
-                    return StatusCode(404);
+                    return StatusCode(500);
                 }
             }
         }
@@ -170,7 +168,7 @@ namespace Lab5.Controllers
             }
             catch
             {
-                return StatusCode(404);
+                return StatusCode(500);
             }
         }
 
@@ -184,15 +182,19 @@ namespace Lab5.Controllers
                 {
                     FileSystem.DeleteFile(fullPath);
                 }
-                else
+                else if (System.IO.Directory.Exists(fullPath))
                 {
                     FileSystem.DeleteDirectory(fullPath, DeleteDirectoryOption.DeleteAllContents);
+                }
+                else
+                {
+                    return StatusCode(404);
                 }
                 return StatusCode(200);
             }
             catch
             {
-                return StatusCode(404);
+                return StatusCode(500);
             }
         }
     }
